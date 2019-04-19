@@ -7,6 +7,18 @@ class App extends Component {
     super();
     this.handleClick = this.handleClick.bind(this);
     this.url = React.createRef();
+    this.state = {
+      url: ''
+    }
+  }
+  componentDidMount(){
+    axios.get('/url')
+    .then(res => {
+      console.log(res);
+      this.setState({
+        url: res.data.url
+      });
+    });
   }
   handleClick(){
     console.log(this.url.current.value);
@@ -19,6 +31,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        Url:  {this.state.url}<br/>
         <input type='text' ref={this.url}/>
         <button onClick={this.handleClick}>Set</button>
       </div>
