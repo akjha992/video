@@ -18,7 +18,6 @@ app.get('/url', (req, res) => {
       collection.find().toArray(function(err, docs) {
         console.log(docs[0]);
         res.send(docs[0]);
-        db.close()
       })
     client.close();
   });
@@ -33,15 +32,11 @@ app.post('/setUrl', function(req, res) {
       collection.updateOne({'title':'GOT'}, {$set:{'url':url}}, function(err, res) {
         if (err) throw err;
         console.log("1 document updated");
-        db.close();
       });
       client.close();
       res.send('set successfully');
   });
 });
-
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
